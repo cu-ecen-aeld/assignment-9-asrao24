@@ -7,31 +7,7 @@ on:
             - '*'
 jobs:
     full-test:
-        container: cuaesd/aesd-autotest:assignment4-buildroot
-        runs-on: self-hosted
-        timeout-minutes: 120
-        steps:
-          - uses: actions/checkout@v2
-          - name: Checkout submodules
-<<<<<<< HEAD
-            run: git submodule update --init --recursive
-          - uses: webfactory/ssh-agent@v0.5.3
-            with:
-                ssh-private-key: ${{ secrets.MY_FIRST_SECRET }}
-          - name: Run full test
-            env:
-              GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-            run: ./full-test.sh
-          - name: Cleanup
-            if: always()
-            run: |
-              ssh-add -D
-=======
-            run : git submodule update --init --recursive
-          - name: Run unit test
-            run: ./unit-test.sh
-    full-test:
-        container: cuaesd/aesd-autotest:assignment5
+       container: cuaesd/aesd-autotest:assignment5
         runs-on: self-hosted
         steps:
           - uses: actions/checkout@v2
@@ -39,4 +15,3 @@ jobs:
             run : git submodule update --init --recursive
           - name: Run full test
             run: ./full-test.sh
->>>>>>> assignments-base/assignment5
