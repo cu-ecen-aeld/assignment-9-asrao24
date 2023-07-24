@@ -105,6 +105,11 @@ void *handle_conn(void *ch_void) {
 
 	int bytes_read = 0;
 	int outbuf_size = 0;
+
+	// Initialize recv_buf with zeros before receiving data
+    	memset(recv_buf, 0, NET_BUF_SIZE + 1);
+
+
 	while (true) {
 		bytes_read = recv(ch.conn_fd, recv_buf, NET_BUF_SIZE + 1, 0);
 
