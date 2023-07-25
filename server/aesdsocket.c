@@ -117,6 +117,12 @@ void *handle_conn(void *ch_void) {
 			fprintf(stderr, "read nothing, must be finished\n");
 			break;
 		}
+                
+                if (strncmp(recv_buf, "timestamp:", 10) == 0) {
+       		 // Skip this line and continue reading
+        	continue;
+    		}
+
 
 		recv_buf[bytes_read] = '\0';
 		fprintf(stderr, "read %d char: %s\n", bytes_read, recv_buf);
