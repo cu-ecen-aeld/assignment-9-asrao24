@@ -1,17 +1,26 @@
-CFLAGS += -Wall -Werror
-LDFLAGS += -pthread
+CROSS_COMPILE ?=
+#CROSS_COMPILE=aarch64-none-linux-gnu-
+CC=gcc
+
+default: all
 
 all: aesdsocket
 
-default: aesdsocket
-
-aesdsocket: aesdsocket.o  
-	$(CC) $(CFLAGS) $(INCLUDES) $^ -o $@ $(LDFLAGS)
+aesdsocket: aesdsocket.o
+	@if [ -z "$(CROSS_COMPILE)" ]; \
+	then \
+		$(CC) -o aesdsocket aesdsocket.o; \
+	else \
+		"$(CROSS_COMPILE)$(CC)" -o aesdsocket aesdsocket.o; \
+	fi
 
 aesdsocket.o: aesdsocket.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $^ $(LDFLAGS)
-
+	@if [ -z "$(CROSS_COMPILE)" ]; \
+	then \
+		$(CC) -c aesdsocket.c -o aesdsocket.o; \
+	else \
+		"$(CROSS_COMPILE)$(CC)" -c aesdsocket.c -o aesdsocket.o; \
+	fi
 
 clean:
-	rm -f aesdsocket
-	rm -f *.o
+	@rm -f aesdsocket aesdsocket.o
