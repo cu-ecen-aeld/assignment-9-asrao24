@@ -70,13 +70,13 @@ int main(int argc, char *argv[]) {
     openlog("aesdsocket_server", LOG_CONS | LOG_PID, LOG_USER);
 
     bool daemon_mode = false;
-    
+
     char *buffer;
     buffer = (char*)malloc(BUFFER_SIZE*sizeof(char));
     memset(buffer, 0, BUFFER_SIZE*sizeof(char));
     size_t available_heap = get_available_heap_size();
     char *ptr = NULL;
-    
+
     // Parse command-line arguments
     int opt;
     while ((opt = getopt(argc, argv, "d")) != -1) {
@@ -103,11 +103,10 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-	int enable = 1;
-	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0) {
-    		perror("setsockopt(SO_REUSEADDR) failed");
-	}
-
+    int enable = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0) {
+             perror("setsockopt(SO_REUSEADDR) failed");
+    }
 
     // Set up the server address structure
     memset(&server_addr, 0, sizeof(server_addr));
@@ -144,7 +143,7 @@ int main(int argc, char *argv[]) {
             perror("accept");
             continue;
         }
-	
+
         // Log the accepted connection to syslog with client IP address
         inet_ntop(AF_INET, &(client_addr.sin_addr), client_ip, INET_ADDRSTRLEN);
         syslog(LOG_INFO, "Accepted connection from %s", client_ip);
@@ -157,11 +156,10 @@ int main(int argc, char *argv[]) {
             continue;
         }
 
-	
-	//char buffer[1024];
+        //char buffer[1024];
         ssize_t total_received = 0;
         ssize_t bytes_received;
-	//printf("Available heap: %lu\n\r",available_heap);
+        printf("Available heap: %lu\n\r",available_heap);
         while ((bytes_received = recv(client_sock, buffer, BUFFER_SIZE*sizeof(char) - 1, 0)) > 0) {
             if ((total_received > available_heap)) {
                 syslog(LOG_INFO, "Packet too large for available heap, closing connection");
@@ -170,15 +168,25 @@ int main(int argc, char *argv[]) {
                 close(client_sock);
                 break;
             }
-            ptr = strchr(buffer, '\n');
-            if (ptr != NULL){
-            	break;
+            
+	    printf("Received bytes in this line = %lu\n", bytes_received);
+	    ptr = strchr(buffer, '\n');
+            
+	    if (ptr != NULL){
+		printf("Newline recieved\n");
+                break;
             }
-            total_received += bytes_received;
+
+            printf("No Newline recieved, moving to next chunk of data\n");
+	    total_received += bytes_received;
+	   // write(file_fd, buffer, bytes_received);
         }
-        write(file_fd, buffer, bytes_received);
         
-	// Echo back the received data to the client
+        
+       //write(file_fd, buffer, total_received);
+        write(file_fd, buffer, bytes_received);
+
+        // Echo back the received data to the client
         file_fd = open("/var/tmp/aesdsocketdata", O_RDONLY);
         if (file_fd == -1) {
             perror("open");
@@ -189,7 +197,7 @@ int main(int argc, char *argv[]) {
         while ((bytes_received = read(file_fd, buffer, sizeof(buffer))) > 0) {
             ssize_t bytes_sent = send(client_sock, buffer, bytes_received, 0);
             }
-	     memset(buffer, 0, BUFFER_SIZE*sizeof(char));
+             memset(buffer, 0, BUFFER_SIZE*sizeof(char));
 
         close(file_fd);
 
