@@ -25,6 +25,16 @@ set +e
 if [ -f conf/assignment.txt ]; then
     # This is just one example of how you could find an associated assignment
     assignment=`cat conf/assignment.txt`
+
+    echo "assignment =${assignment}"
+    echo "pwd = $(test_dir)"
+    if [ -d "./assignment-autotest/test/assignment5-buildroot" ]; then
+    echo "Directory exists"
+else
+    echo "Directory does not exist"
+fi
+
+
     if [ -f ./assignment-autotest/test/assignment5-buildroot/assignment-test.sh ]; then
         echo "Executing assignment test script"
         ./assignment-autotest/test/assignment5-buildroot/assignment-test.sh $test_dir
