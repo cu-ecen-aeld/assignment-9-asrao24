@@ -28,10 +28,18 @@ if [ -f conf/assignment.txt ]; then
 
     echo "assignment =${assignment}"
     #echo "pwd = $(test_dir)"
-    if [ -d "./assignment-autotest/test/assignment5-buildroot" ]; then
-    echo "Directory exists"
+    if [ -d "./assignment-autotest" ]; then
+
+    echo "assignment-autotest Directory exists"
 else
-    echo "Directory does not exist"
+    echo "assignment-autotest Directory does not exist"
+fi
+
+if [ -d "./assignment-autotest/test" ]; then
+
+    echo "assignment-autotest/test Directory exists"
+else
+    echo "assignment-autotest/test Directory does not exist"
 fi
 
 
