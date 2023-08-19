@@ -27,7 +27,7 @@ if [ -f conf/assignment.txt ]; then
     assignment=`cat conf/assignment.txt`
 
     echo "assignment =${assignment}"
-    echo "pwd = $(test_dir)"
+    #echo "pwd = $(test_dir)"
     if [ -d "./assignment-autotest/test/assignment5-buildroot" ]; then
     echo "Directory exists"
 else
