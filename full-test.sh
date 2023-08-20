@@ -22,12 +22,13 @@ set +e
 
 # If there's a configuration for the assignment number, use this to look for
 # additional tests
+
 if [ -f conf/assignment.txt ]; then
     # This is just one example of how you could find an associated assignment
     assignment=`cat conf/assignment.txt`
 
     echo "assignment =${assignment}"
-    #echo "pwd = $(test_dir)"
+    echo "pwd = ${test_dir}"
     if [ -d "./assignment-autotest" ]; then
 
     echo "assignment-autotest Directory exists"
