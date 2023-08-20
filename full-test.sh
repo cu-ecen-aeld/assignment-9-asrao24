@@ -38,7 +38,7 @@ fi
 
 if [ -d "./assignment-autotest/test" ]; then
 
-    echo "assignment-autotest/test Directory exists"
+    echo "  assignment-autotest/test Directory exists"
 else
     echo "assignment-autotest/test Directory does not exist"
 fi
