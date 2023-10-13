@@ -1,0 +1,4 @@
+config BR2_PACKAGE_LDD
+    bool "ldd"
+    help
+      This package enables support for misc-modules and scull components.
