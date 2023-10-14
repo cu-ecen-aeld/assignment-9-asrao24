@@ -6,18 +6,15 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your assignment 3 git contents
-#AESD_ASSIGNMENTS_VERSION = '2cc7db67457cf343ad91a2a7f96e36372cfaab63'
-AESD_ASSIGNMENTS_VERSION = '4d0264b78c8ac0062bd85cce67896ef89974243b'
-
+#AESD_ASSIGNMENTS_VERSION = 
+AESD_ASSIGNMENTS_VERSION = 2e13fba644907c75e5a685d087b8ba1011bbcf1c
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
-AESD_ASSIGNMENTS_SITE = 'git@github.com:cu-ecen-aeld/assignments-3-and-later-asrao24.git'
-
-
-
+AESD_ASSIGNMENTS_SITE = git@github.com:cu-ecen-aeld/assignments-3-and-later-asrao24.git
 AESD_ASSIGNMENTS_SITE_METHOD = git
 AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
+
 define AESD_ASSIGNMENTS_BUILD_CMDS
 	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/finder-app all
 	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/server all
