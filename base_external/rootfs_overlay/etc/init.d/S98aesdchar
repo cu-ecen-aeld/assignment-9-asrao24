@@ -19,7 +19,7 @@ case "$1" in
 	;;
     stop)
 	echo "Unloading aesdchar driver"
-	rmmod aesdchar
+	rmmod -fa aesdchar
 
 	# Remove stale nodes
 	rm -f /dev/aesdchar
